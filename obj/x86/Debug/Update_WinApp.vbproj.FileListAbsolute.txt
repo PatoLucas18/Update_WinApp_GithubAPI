@@ -18,3 +18,4 @@ C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Debug\Update_WinApp.pdb
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Debug\Update_WinApp.xml
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Debug\Update_WinApp.CheckUpdate.resources
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Debug\Update_WinApp.exe.config

@@ -5,6 +5,7 @@ Public Class GithubAPI
     Public Property body As String
 
     Public Property assets As List(Of Asset)
+
 End Class
 
 Public Class Asset

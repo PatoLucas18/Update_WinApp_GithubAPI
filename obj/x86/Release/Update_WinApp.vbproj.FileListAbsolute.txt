@@ -1,0 +1,13 @@
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Update_WinApp.exe
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Update_WinApp.pdb
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Update_WinApp.xml
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Newtonsoft.Json.dll
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.vbprojResolveAssemblyReference.cache
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.CheckUpdate.resources
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.Form1.resources
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.Resources.resources
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.vbproj.GenerateResource.Cache
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.exe
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.xml
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.pdb
+C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Update_WinApp.exe.config
