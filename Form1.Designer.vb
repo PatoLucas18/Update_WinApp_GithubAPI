@@ -82,7 +82,7 @@ Partial Class Form1
         'CheckUpdatesToolStripMenuItem
         '
         Me.CheckUpdatesToolStripMenuItem.Name = "CheckUpdatesToolStripMenuItem"
-        Me.CheckUpdatesToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.CheckUpdatesToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.CheckUpdatesToolStripMenuItem.Text = "Update App"
         '
         'FindUpdatesToolStripMenuItem
@@ -90,7 +90,7 @@ Partial Class Form1
         Me.FindUpdatesToolStripMenuItem.Checked = True
         Me.FindUpdatesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.FindUpdatesToolStripMenuItem.Name = "FindUpdatesToolStripMenuItem"
-        Me.FindUpdatesToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.FindUpdatesToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.FindUpdatesToolStripMenuItem.Text = "Find Updates"
         '
         'Form1
@@ -104,7 +104,7 @@ Partial Class Form1
         Me.Controls.Add(Me.btn_check)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
-        Me.Text = "AppUpdate"
+        Me.Text = "AppUpdate GithubAPI"
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)

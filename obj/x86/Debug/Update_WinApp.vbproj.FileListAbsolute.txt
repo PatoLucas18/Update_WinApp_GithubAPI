@@ -19,3 +19,17 @@ C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Debug\Update_WinApp.xml
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Debug\Update_WinApp.CheckUpdate.resources
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Debug\Update_WinApp.exe.config
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Debug\Update_WinApp.exe.config
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.exe
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.xml
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.pdb
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Debug\Update_WinApp.exe
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Debug\Update_WinApp.pdb
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Debug\Update_WinApp.xml
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.CheckUpdate.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.Form1.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.Resources.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.vbproj.GenerateResource.Cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.vbproj.AssemblyReference.cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.vbproj.CoreCompileInputs.cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Debug\Update_WinApp.vbproj.CopyComplete

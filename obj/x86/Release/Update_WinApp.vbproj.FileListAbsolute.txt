@@ -11,3 +11,18 @@ C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.xml
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\obj\x86\Release\Update_WinApp.pdb
 C:\Users\USER\documents\visual studio 2010\Projects\Update_WinApp\Update_WinApp\bin\Release\Update_WinApp.exe.config
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Release\Newtonsoft.Json.dll
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp.vbproj.GenerateResource.Cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp.vbproj.AssemblyReference.cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp.vbproj.CoreCompileInputs.cache
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp.vbproj.CopyComplete
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Release\Update_WinApp GithubAPI.exe.config
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Release\Update_WinApp GithubAPI.exe
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Release\Update_WinApp GithubAPI.pdb
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\bin\Release\Update_WinApp GithubAPI.xml
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp_GithubAPI.CheckUpdate.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp_GithubAPI.Form1.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp_GithubAPI.Resources.resources
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp GithubAPI.exe
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp GithubAPI.xml
+C:\Users\Pato\Documents\VS Projects\Update_WinApp\obj\x86\Release\Update_WinApp GithubAPI.pdb

@@ -10,21 +10,18 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        CheckUpdate.DeleteFolderAndContents()
         FindUpdatesToolStripMenuItem.Checked = My.Settings.updates
         Label1.Text = My.Application.Info.Version.ToString()
-        ' Delete the old executable 
-        If IO.File.Exists("temp_old") Then
-            Try
-                My.Computer.FileSystem.DeleteFile("temp_old")
-            Catch ex As Exception
-
-            End Try
-        End If
+        
 
         If FindUpdatesToolStripMenuItem.Checked = True Then
             YourAsyncEvent()
         End If
+
     End Sub
+
+#Region "Find Updates Async"
 
     Private Sub YourAsyncEvent()
         ' Synchronous code before the asynchronous operation
@@ -55,6 +52,7 @@ Public Class Form1
                                      End Sub)
     End Function
 
+#End Region
 
     Private Sub FindUpdatesToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles FindUpdatesToolStripMenuItem.Click
         If FindUpdatesToolStripMenuItem.Checked = True Then

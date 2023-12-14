@@ -1,20 +1,17 @@
 ﻿
-Imports System.Text
 Imports System.Net
 Imports System.IO
 Imports Newtonsoft.Json
-Imports System.Text.RegularExpressions
-Imports Newtonsoft.Json.Linq
+Imports System.IO.Compression
 
 Public Class CheckUpdate
     Dim savePath As String
+    Dim githubAPI As Object ' Specify the correct type for githubAPI
 
     ' GitHub API URL
     Public Shared url As String = "https://api.github.com/repos/PatoLucas18/Update_WinApp_GithubAPI/releases/latest"
-    'Public Shared url As String = "http://localhost/latest.json"
-    Dim githubAPI
 
-    Public Shared Function get_githubAPI()
+    Public Shared Function get_githubAPI() As Object
         ServicePointManager.Expect100Continue = True
         ServicePointManager.SecurityProtocol = 3072
 
@@ -35,22 +32,22 @@ Public Class CheckUpdate
         End Using
     End Function
 
-    Public Function get_url(ByVal githubAPI) As String
+    Public Function get_url(ByVal githubAPI As Object) As String
         Debug.WriteLine(githubAPI.url)
         Return githubAPI.url
     End Function
 
-    Public Function get_tag_name(ByVal githubAPI) As String
+    Public Function get_tag_name(ByVal githubAPI As Object) As String
         Debug.WriteLine(githubAPI.tag_name)
         Return githubAPI.tag_name.ToString.Replace("v", "")
     End Function
 
-    Public Function get_body(ByVal githubAPI) As String
+    Public Function get_body(ByVal githubAPI As Object) As String
         Debug.WriteLine(githubAPI.body)
         Return githubAPI.body
     End Function
 
-    Public Function compare(ByVal githubAPI) As Boolean
+    Public Function compare(ByVal githubAPI As Object) As Boolean
         Dim versionString As String = githubAPI.tag_name.ToString.Replace("v", "")
         Dim githubVersion As New Version(versionString)
 
@@ -69,12 +66,12 @@ Public Class CheckUpdate
         End If
     End Function
 
-    Public Sub get_download_url(ByVal githubAPI)
+    Public Sub get_download_url(ByVal githubAPI As Object)
         For Each asset As Asset In githubAPI.assets
             Debug.WriteLine(asset.browser_download_url)
             ' Download the file
             Dim downloadUrl As String = asset.browser_download_url
-            savePath = Path.GetFileName(downloadUrl)
+            savePath = Path.Combine(Path.GetTempPath(), Path.GetFileName(downloadUrl))
 
             Using webClient As New WebClient()
                 ' Add the DownloadProgressChanged event
@@ -95,7 +92,7 @@ Public Class CheckUpdate
         Dim result As DialogResult = MessageBox.Show("Save your work, the program will restart, Do you want to continue?", "Update", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
-
+            btn_download.Enabled = False
             get_download_url(githubAPI)
         End If
 
@@ -126,8 +123,6 @@ Public Class CheckUpdate
     Private Sub WebClientDownloadCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.AsyncCompletedEventArgs)
         ' Check if the download completed without errors
         If e.Error Is Nothing Then
-            ' Show a success message
-            MessageBox.Show("Download completed successfully. The program will restart.", "Download completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             ' You can add additional code here after successful download
             ' For example, unzip the file or perform other operations
@@ -148,66 +143,118 @@ Public Class CheckUpdate
 
     ' Form loading with update check
     Private Sub CheckUpdate_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        githubAPI = get_githubAPI()
-        lb_current.Text = My.Application.Info.Version.ToString()
-        lb_last.Text = get_tag_name(githubAPI)
+        Try
+            githubAPI = get_githubAPI()
+            lb_current.Text = My.Application.Info.Version.ToString()
+            lb_last.Text = get_tag_name(githubAPI)
+            If compare(githubAPI) = False Then
+                lb_update.Text = ("The application version is up-to-date.")
+                btn_download.Enabled = False
+            Else
+                btn_download.Enabled = True
+                lb_update.Text = ("An update is available." & vbCrLf & "Do you want to download it?")
+                RichTextBox1.Text = get_body(githubAPI)
+            End If
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        End Try
+    End Sub
 
-        If compare(githubAPI) = False Then
-            lb_update.Text = ("The application version is up-to-date.")
-            btn_download.Enabled = False
-        Else
-            btn_download.Enabled = True
-            lb_update.Text = ("An update is available." & vbCrLf & "Do you want to download it?")
-            RichTextBox1.Text = get_body(githubAPI)
+    Public Sub deleteTemp()
+        ' Obtain the path to the temporary folder
+        Dim tempFolderPath As String = Path.GetTempPath()
+
+        ' Obtain the name of the executable file
+        Dim executableFileName As String = Path.GetFileName(Application.ExecutablePath)
+
+        ' Combine the path of the temporary folder with the name of the executable file
+        Dim tempExecutablePath As String = Path.Combine(tempFolderPath, executableFileName)
+
+        ' Check if the file already exists in the temporary folder
+        If File.Exists(tempExecutablePath) Then
+            Try
+                ' Delete the existing file in the temporary folder
+                File.Delete(tempExecutablePath)
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
 
     Public Sub applyUpdate(ByVal zipFilePath As String)
-        Dim executablePath As String = Application.ExecutablePath
-        Dim executableName As String = Path.GetFileName(executablePath) & "_old"
 
-        Console.WriteLine("Current executable name: " & executableName)
+        ' Obtain the name of the executable file
+        Dim executableFileName As String = Path.GetFileName(Application.ExecutablePath)
+        ' Combine the path of the temporary folder with the name of the executable file
+        Dim tempExecutablePath As String = Path.Combine(Path.GetTempPath(), executableFileName)
 
-        ' Path to the ZIP file
-        ' Destination path for extraction
-        My.Computer.FileSystem.RenameFile(executablePath, "temp_old")
+        Try
+            ' Backup files
+            MoveFiles()
+            ' Unzip new files
+            ZipFile.ExtractToDirectory(zipFilePath, Application.StartupPath)
 
-        ' Build the PowerShell command
-        Dim powershellCommand As String = String.Format("Expand-Archive -Path '{0}' -DestinationPath '{1}'", zipFilePath, Application.StartupPath)
+            MessageBox.Show("Download and Update completed successfully. The program will restart.", "Update completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        ' Configure the process to run PowerShell
-        Dim process As New Process()
-        Dim startInfo As New ProcessStartInfo("powershell.exe")
+            ' Delete temp zip file
+            My.Computer.FileSystem.DeleteFile(zipFilePath)
+            Me.Close()
 
-        ' Configure redirection of standard input and output
-        startInfo.RedirectStandardInput = True
-        startInfo.RedirectStandardOutput = True
-        startInfo.UseShellExecute = False
-        startInfo.CreateNoWindow = True
+            ' Restart the application
+            Application.Restart()
 
-        process.StartInfo = startInfo
+        Catch ex As UnauthorizedAccessException
+            ' Handle the unauthorized access exception
+            MessageBox.Show("Access denied. Please check your access permissions.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Dim result As DialogResult = MessageBox.Show("Access denied. Do you want to restart the program as an administrator and try again?", "Access Denied", MessageBoxButtons.YesNo, MessageBoxIcon.Error)
 
-        ' Start the process
-        process.Start()
+            If result = DialogResult.Yes Then
+                RestartAsAdmin()
+            Else
+                Me.Close()
+            End If
+        End Try
+    End Sub
 
-        ' Run the PowerShell command
-        Dim inputStreamWriter As StreamWriter = process.StandardInput
-        Dim outputStreamReader As StreamReader = process.StandardOutput
+    Private Sub MoveFiles()
+        Dim pathScr As String = Application.StartupPath
+        Dim pathDest As String = Path.Combine(Application.StartupPath, "old")
+        ' Obtain all files in the origin folder
+        Dim files As String() = Directory.GetFiles(pathScr)
 
-        inputStreamWriter.WriteLine(powershellCommand)
-        inputStreamWriter.Close()
+        ' Move each file to the backup folder
+        For Each archivo As String In files
+            Dim filesnames As String = Path.GetFileName(archivo)
+            Dim filesDest As String = Path.Combine(pathDest, filesnames)
+            My.Computer.FileSystem.MoveFile(archivo, filesDest, True) ' True to overwrite if the file already exists
+        Next
+    End Sub
+    Public Sub DeleteFolderAndContents()
+        Dim folderPath As String = Path.Combine(Application.StartupPath, "old")
+        Try
+            ' Check if the folder exists before attempting to delete it
+            If Directory.Exists(folderPath) Then
+                ' Delete the folder and its contents recursively
+                Directory.Delete(folderPath, True)
+            End If
+        Catch ex As Exception
+            ' Show an error message if the folder cannot be deleted
+            MessageBox.Show("Error deleting the folder: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+    Private Sub RestartAsAdmin()
+        Dim startInfo As New ProcessStartInfo()
+        startInfo.UseShellExecute = True
+        startInfo.WorkingDirectory = Environment.CurrentDirectory
+        startInfo.FileName = Application.ExecutablePath
+        startInfo.Verb = "runas" ' This line requests administrator privileges
 
-        ' Wait for the PowerShell process to exit
-        process.WaitForExit()
-
-        ' Close the PowerShell process
-        process.Close()
-
-        ' Show a message (optional)
-        MessageBox.Show("Update completed. The program will restart.")
-        My.Computer.FileSystem.DeleteFile(zipFilePath)
-
-        ' Restart the application
-        Application.Restart()
+        Try
+            Process.Start(startInfo)
+            Application.Exit()
+        Catch ex As Exception
+            ' Handle any errors that may occur when requesting administrator privileges
+            MessageBox.Show("Error attempting to restart as administrator: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 End Class

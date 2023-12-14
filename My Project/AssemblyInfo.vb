@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Update_WinApp")> 
+<Assembly: AssemblyTitle("Update WinApp GithubAPI")>
 <Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("Update_WinApp")> 
+<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyProduct("Update WinApp GithubAPI")>
 <Assembly: AssemblyCopyright("Copyright ©  2023")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("470b8c1b-a985-44d6-9b2f-6ebb4ab68c2c")> 
+<Assembly: Guid("470b8c1b-a985-44d6-9b2f-6ebb4ab68c2c")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("1.0.0.0")>
+<Assembly: AssemblyFileVersion("1.0.0.0")>
