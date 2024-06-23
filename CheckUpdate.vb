@@ -42,6 +42,10 @@ Public Class CheckUpdate
         Return githubAPI.tag_name.ToString.Replace("v", "")
     End Function
 
+    Public Function get_name(ByVal githubAPI As Object) As String
+        Debug.WriteLine(githubAPI.name)
+        Return githubAPI.name
+    End Function
     Public Function get_body(ByVal githubAPI As Object) As String
         Debug.WriteLine(githubAPI.body)
         Return githubAPI.body
@@ -152,7 +156,7 @@ Public Class CheckUpdate
                 btn_download.Enabled = False
             Else
                 btn_download.Enabled = True
-                lb_update.Text = ("An update is available." & vbCrLf & "Do you want to download it?")
+                lb_update.Text = ("An update is available." & vbCrLf & "Do you want to download it?" & vbCrLf & vbCrLf & get_name(githubAPI))
                 RichTextBox1.Text = get_body(githubAPI)
             End If
         Catch ex As Exception
@@ -181,24 +185,65 @@ Public Class CheckUpdate
         End If
     End Sub
 
+
+    Dim path_old As String = Path.Combine(Application.StartupPath, "old")
+    ' Obtain the name of the executable file
+    Dim executableFileName As String = Path.GetFileNameWithoutExtension(Application.ExecutablePath)
+    ' Combine the path of the temporary folder with the name of the executable file
+    Dim tempExecutablePath As String = Path.Combine(Path.GetTempPath(), executableFileName)
     Public Sub applyUpdate(ByVal zipFilePath As String)
 
-        ' Obtain the name of the executable file
-        Dim executableFileName As String = Path.GetFileName(Application.ExecutablePath)
-        ' Combine the path of the temporary folder with the name of the executable file
-        Dim tempExecutablePath As String = Path.Combine(Path.GetTempPath(), executableFileName)
 
         Try
-            ' Backup files
-            MoveFiles()
+
             ' Unzip new files
-            ZipFile.ExtractToDirectory(zipFilePath, Application.StartupPath)
+
+            ' Crear el directorio temporal
+            Directory.CreateDirectory(tempExecutablePath)
+            ZipFile.ExtractToDirectory(zipFilePath, tempExecutablePath)
+
 
             MessageBox.Show("Download and Update completed successfully. The program will restart.", "Update completed", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
+            ' Verificar si la ruta existe
+            If Directory.Exists(tempExecutablePath) Then
+                ' Obtener los archivos en la ruta
+                Dim archivos As String() = Directory.GetFiles(tempExecutablePath)
+                Debug.WriteLine("Archivos:")
+                For Each archivo As String In archivos
+                    Dim filesDest_old As String = Path.Combine(path_old, Path.GetFileName(archivo))
+                    Dim filesDest As String = Path.Combine(Application.StartupPath, Path.GetFileName(archivo))
+                    If IO.File.Exists(filesDest) Then My.Computer.FileSystem.MoveFile(filesDest, filesDest_old, True) ' True to overwrite if the file already exists
+                    My.Computer.FileSystem.MoveFile(archivo, filesDest, True) ' True to overwrite if the file already exists
+                    Debug.WriteLine(archivo)
+                Next
+
+                ' Obtener las carpetas en la ruta
+                Dim carpetas As String() = Directory.GetDirectories(tempExecutablePath)
+                Debug.WriteLine(vbCrLf & "Carpetas:")
+                For Each carpeta As String In carpetas
+                    Dim filesDest_old As String = Path.Combine(path_old, Path.GetFileName(carpeta))
+                    Dim filesDest As String = Path.Combine(Application.StartupPath, Path.GetFileName(carpeta))
+
+                    ' Mover la carpeta y su contenido
+                    If Directory.Exists(filesDest) Then Directory.Move(filesDest, filesDest_old)
+                    Directory.Move(carpeta, filesDest)
+                    Debug.WriteLine(Path.GetFileName(carpeta))
+                Next
+
+                If Directory.Exists(tempExecutablePath) Then
+                    ' Delete the folder and its contents recursively
+                    Directory.Delete(tempExecutablePath, True)
+                End If
+            Else
+                Debug.WriteLine("La ruta especificada no existe.")
+            End If
+
+
+
             ' Delete temp zip file
-            My.Computer.FileSystem.DeleteFile(zipFilePath)
-            Me.Close()
+            If IO.File.Exists(zipFilePath) Then My.Computer.FileSystem.DeleteFile(zipFilePath)
+
 
             ' Restart the application
             Application.Restart()
@@ -216,26 +261,13 @@ Public Class CheckUpdate
         End Try
     End Sub
 
-    Private Sub MoveFiles()
-        Dim pathScr As String = Application.StartupPath
-        Dim pathDest As String = Path.Combine(Application.StartupPath, "old")
-        ' Obtain all files in the origin folder
-        Dim files As String() = Directory.GetFiles(pathScr)
 
-        ' Move each file to the backup folder
-        For Each archivo As String In files
-            Dim filesnames As String = Path.GetFileName(archivo)
-            Dim filesDest As String = Path.Combine(pathDest, filesnames)
-            My.Computer.FileSystem.MoveFile(archivo, filesDest, True) ' True to overwrite if the file already exists
-        Next
-    End Sub
     Public Sub DeleteFolderAndContents()
-        Dim folderPath As String = Path.Combine(Application.StartupPath, "old")
         Try
             ' Check if the folder exists before attempting to delete it
-            If Directory.Exists(folderPath) Then
+            If Directory.Exists(path_old) Then
                 ' Delete the folder and its contents recursively
-                Directory.Delete(folderPath, True)
+                Directory.Delete(path_old, True)
             End If
         Catch ex As Exception
             ' Show an error message if the folder cannot be deleted
@@ -257,4 +289,12 @@ Public Class CheckUpdate
             MessageBox.Show("Error attempting to restart as administrator: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+
+
+    Private Sub RichTextBox1_LinkClicked(ByVal sender As Object, ByVal e As LinkClickedEventArgs) Handles RichTextBox1.LinkClicked
+        ' Abre el enlace en un navegador web externo
+        Process.Start(e.LinkText)
+    End Sub
+
 End Class
