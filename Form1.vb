@@ -10,19 +10,24 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        CheckUpdate.DeleteFolderAndContents()
+
         FindUpdatesToolStripMenuItem.Checked = My.Settings.updates
         Label1.Text = My.Application.Info.Version.ToString()
         
+
+
+    End Sub
+
+#Region "Find Updates Async"
+    Private Sub Form1_Load_check(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        CheckUpdate.DeleteFolderAndContents()
+        'FindUpdatesToolStripMenuItem.Checked = My.Settings.updates
 
         If FindUpdatesToolStripMenuItem.Checked = True Then
             YourAsyncEvent()
         End If
 
     End Sub
-
-#Region "Find Updates Async"
-
     Private Sub YourAsyncEvent()
         ' Synchronous code before the asynchronous operation
         Dim asynchronousTask As Task = YourAsyncOperation()
